@@ -2,9 +2,9 @@
   "name": "back",
   "version": "0.0.1",
   "description": "",
-  "author": "",
+  "author": "Yaroslav Makarov",
   "private": true,
-  "license": "UNLICENSED",
+  "license": "MIT",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",

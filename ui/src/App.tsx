@@ -1,33 +1,35 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import "./App.css";
+import { useMemo } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 
-function App() {
-  const [count, setCount] = useState(1);
+import { CssBaseline, ThemeProvider, StyledEngineProvider } from '@mui/material';
+import { createTheme } from '@mui/material/styles';
 
+import Router from '~/Router';
+import { useAppSelector } from '~/store';
+import { darkModeSelector } from '~/store/UI';
+import ModalStack from '~/ui-kit/atoms/ModalStack';
+import SnackStack from '~/ui-kit/atoms/SnackStack';
+import { theme } from '~/ui-kit/theme';
+
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+
+function App(): JSX.Element {
+  const darkMode = useAppSelector(darkModeSelector);
+  const currentTheme = useMemo(() => createTheme(theme(darkMode)), [darkMode]);
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count are {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={currentTheme}>
+        <CssBaseline />
+        <BrowserRouter>
+          <Router />
+        </BrowserRouter>
+        <SnackStack />
+        <ModalStack />
+      </ThemeProvider>
+    </StyledEngineProvider>
   );
 }
 
